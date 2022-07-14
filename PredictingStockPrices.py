@@ -8,7 +8,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout, LSTM
 
 #Load Data
-company = 'FB'
+company = 'LII'
 start = dt.datetime(2012,1,1)
 end = dt.datetime(2020,1,1)
 
