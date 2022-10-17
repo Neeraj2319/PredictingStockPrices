@@ -15,6 +15,7 @@ end = dt.datetime(2020,1,1)
 data = web.DataReader(company, 'yahoo', start, end)
 
 #prepare data
+#transforming your data so that it fits within a specific scale, like 0-100 or 0-1. 
 scaler = MinMaxScaler(feature_range=(0,1))
 scaled_data = scaler.fit_transform(data['Close'].values.reshape(-1,1))
 prediction_days = 60
@@ -31,9 +32,10 @@ x_train, y_train = np.array(x_train), np.array(y_train)
 x_train = np.reshape(x_train, (x_train.shape[0], x_train.shape[1], 1))
 
 #Build The Model
+#Machine learning models that input or output data sequences are known as sequence models.
 model = Sequential()
 
-
+#Long short-term memory (LSTM) is an artificial neural network used in the fields of artificial intelligence and deep learning. Unlike standard feedforward neural networks, LSTM has feedback connections.
 model.add(LSTM(units=50, return_sequences=True, input_shape=(x_train.shape[1], 1)))
 model.add(Dropout(0.2))
 model.add(LSTM(units=50, return_sequences=True))
@@ -41,7 +43,7 @@ model.add(Dropout(0.2))
 model.add(LSTM(units=50))
 model.add(Dropout(0.2))
 model.add(Dense(units=1)) # Prediction of the next closing value
-
+#Adam optimizer involves a combination of two gradient descent methodologies
 model.compile(optimizer='adam', loss='mean_squared_error')
 model.fit(x_train, y_train, epochs=25,batch_size=32)
 
